@@ -1,16 +1,20 @@
 # Nutrition Label Recognizer
 
 ## Installation
-We assume you have installed python3 and pip on your system.
 
-Run install.sh on your system:
-```bash
-bash setup.sh
+Setup your environment and install the requirements.
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-This install script will do the following:
-1. Install Azure Key Vault Secrets client library for Python - Version 4.3.0
-2. Install Use Form Recognizer SDKs
+Deactivate your environment when you're done.
+
+```
+source .venv/bin/activate
+```
 
 ## Local Testing
 
@@ -25,6 +29,25 @@ Send a client request.
 ```
 curl -X POST -F file=@test_image/nl1.jpg http://localhost:5000/api
 ```
+
+## Azure Deployment
+
+Run the command and give it some time to run. HTTP code 202 is not a bad sign.
+```
+az webapp up --sku S1 --name sicc-ajm-project4 --location=eastus
+```
+
+Send a client request.
+
+```
+curl -X POST -F file=@test_image/nl1.jpg https://sicc-ajm-project4.azurewebsites.net/api
+```
+
+
+## Known Issues
+
+* Do not allow `pkg_resources==0.0.0` in requirements.txt.
+* cURL POST to Azure must be `https://` and not `http://`.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

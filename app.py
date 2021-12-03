@@ -1,15 +1,12 @@
+import io
 import os
-import time
 from flask import Flask, request, jsonify
 from lib.form_reg import FormRecognizer
 from PIL import Image
-import io
-import pdb
 
-app = Flask(__name__)
 
-# Trained model ID
 MODEL_ID = "29e649f9-4539-42dc-a79c-004a9effba76"
+FORM_RECOG = FormRecognizer(MODEL_ID)
 
 # Path to temporary write images.
 TMP_IMAGE_PATH = "/tmp"
@@ -18,6 +15,8 @@ TMP_IMAGE_PATH = "/tmp"
 EXTENSION_MAP = {
     "JPEG": "jpg",
 }
+
+app = Flask(__name__)
 
 
 @app.route('/api', methods=['POST'])
@@ -48,5 +47,5 @@ def analyze_image(image_path):
     print("Operation complete:", res)
 
 
-FORM_RECOG = FormRecognizer(MODEL_ID)
-app.run(host="0.0.0.0", port=5000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

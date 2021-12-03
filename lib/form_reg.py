@@ -14,7 +14,6 @@ from requests import get, post
 Reference:
 https://github.com/Azure-Samples/cognitive-services-quickstart-code/blob/master/python/FormRecognizer/rest/python-labeled-data.md
 https://docs.microsoft.com/en-us/azure/applied-ai-services/form-recognizer/how-to-guides/try-sdk-rest-api?pivots=programming-language-python
-
 Assumption: 
  1. There is only one page per analysis as the input file is of image format
 """
@@ -35,7 +34,6 @@ class FormRecognizer:
     def send_for_analysis(self, file_path: str) -> str:
         """
         Send the image to the Form Recognizer endpoint for analysis.
-
         Args:
             file_path: the file path of the image to be sent for analysis
         Returns:
@@ -81,7 +79,6 @@ class FormRecognizer:
         """
         Retrieve the analysis results returned by the send_for_analysis() method.
         If the analysis is successful, the result is parsed and check for validity.
-
         Args:
             image_path: The path of the image sent for analysis
             resp_url: The operation url where the analysis results can be retrieved from the Form Recognizer endpoint
@@ -89,7 +86,6 @@ class FormRecognizer:
             If the image is a valid nutrition label, a dictionary of analyzed results is returned containing:
                 - Timestamp of the analysis
                 - Nested dictionary of recognized fields along with their values and units
-
             In case of error or failed analysis or the image is foudn to be invalid, None is returned.
         """
 
@@ -141,7 +137,6 @@ class FormRecognizer:
          - Calories field with numeric value
          - Total Fat field with numeric value and valid unit
          - Total Carb field with numeric value and valid unit
-
         Args:
             resp_json: The server analysis json result
         Returns:
@@ -184,12 +179,11 @@ class FormRecognizer:
 
         return results
 
-    def _read_valueString(self, val_str: str) -> (bool, dict):
+    def _read_valueString(self, val_str: str):
         """
         Check if the valueString returned by the analysis is valid:
             - The first set of letters are numeric value
             - The second sets of letters represent valid units (gram or milligrams or micrograms)
-
         Args:
             val_str: valueString returned by the analysis
         Returns:
@@ -220,7 +214,6 @@ class FormRecognizer:
     def _get_key(self, key: str) -> str:
         """
         Access key vault to get secret.
-
         Args:
             key: key name
         Returns:
