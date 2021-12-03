@@ -43,9 +43,9 @@ Send a client request.
 curl -X POST -F file=@test_image/nl1.jpg https://sicc-ajm-project4.azurewebsites.net/api
 ```
 
-
 ## Known Issues
 
+* !!! If you add new dependencies, make sure to update the requirements.txt, because this is required to deploy it to Azure. 
 * Do not allow `pkg_resources==0.0.0` in requirements.txt.
 * cURL POST to Azure must be `https://` and not `http://`.
 
