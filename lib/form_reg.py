@@ -19,6 +19,7 @@ Assumption:
  1. There is only one page per analysis as the input file is of image format
 """
 
+
 class FormRecognizer:
 
     def __init__(self, modelID: str) -> None:
@@ -26,8 +27,9 @@ class FormRecognizer:
         self.train_client = None
         self.modelID = modelID
         self.end_point = "https://eastus.api.cognitive.microsoft.com/"
-        self.fr_key = self._get_key("formrecog")
-        self.post_url = self.end_point + f"/formrecognizer/v2.1/custom/models/{self.modelID}/analyze"
+        self.fr_key = "c816f8b9554546b6b0d02ca4b6c81de0"
+        self.post_url = self.end_point + \
+            f"/formrecognizer/v2.1/custom/models/{self.modelID}/analyze"
         self._create_client()
 
     def send_for_analysis(self, file_path: str) -> str:
@@ -99,7 +101,8 @@ class FormRecognizer:
         # Attempt to retrieve the analysis results every wait_interval until successful
         while wait_time < max_wait_time:
             try:
-                resp = get(url=resp_url, headers={"Ocp-Apim-Subscription-Key": self.fr_key})
+                resp = get(url=resp_url, headers={
+                           "Ocp-Apim-Subscription-Key": self.fr_key})
                 resp_json = resp.json()
 
                 if resp.status_code != 200:
@@ -113,7 +116,8 @@ class FormRecognizer:
                     return None
 
                 elif resp_json["status"] == "succeeded":
-                    print(f"Analysis has been successfully completed for: {image_path}")
+                    print(
+                        f"Analysis has been successfully completed for: {image_path}")
                     return self._parse_result(resp_json)  # Process result
 
                 # Sleep and retry
@@ -125,7 +129,8 @@ class FormRecognizer:
                       f"Error: {str(e)}")
                 return None
 
-        print(f"Timeout! Cannot retrieve analysis results within {max_wait_time}s for: {image_path}")
+        print(
+            f"Timeout! Cannot retrieve analysis results within {max_wait_time}s for: {image_path}")
         return None
 
     def _parse_result(self, resp_json: dict) -> dict:
@@ -164,7 +169,8 @@ class FormRecognizer:
                     is_nl += 1
                     continue
 
-                is_valid, val = self._read_valueString(field_val_dict["valueString"])
+                is_valid, val = self._read_valueString(
+                    field_val_dict["valueString"])
                 if is_valid:
                     recog_fields[field] = val
                     if field in ["totalCarb", "totalFat"]:
