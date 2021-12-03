@@ -15,7 +15,7 @@ def main():
 
         resp_url = form_recog.send_for_analysis(image_path)
         if resp_url is not None:
-            print(form_recog.get_result(resp_url))
+            print(form_recog.get_result(image_path, resp_url))
 
         # At the current pricing tier, the server can only handle an image at a time.
         time.sleep(2)

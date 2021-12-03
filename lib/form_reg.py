@@ -49,8 +49,6 @@ class FormRecognizer:
                   "Supported image formats are JPEG, PNG, and TIFF")
             return None
 
-        print(f"image/{extension[1:]}")
-
         # Request headers
         headers = {
             'Content-Type': f"image/{extension[1:]}",
@@ -65,11 +63,11 @@ class FormRecognizer:
             resp = post(url=self.post_url, data=data_bytes, headers=headers)
 
             if resp.status_code != 202:
-                print(f"Analysis has failed for {file_path}\n"
+                print(f"Server cannot process: {file_path}\n"
                       f"Server response: {json.dumps(resp.json())}")
                 return None
 
-            print(f"Analysis has succeeded for {file_path}")
+            print(f"Server is analyzing: {file_path}")
             return resp.headers["operation-location"]
 
         except Exception as e:
@@ -77,12 +75,13 @@ class FormRecognizer:
                   f"Error: {str(e)}")
             return None
 
-    def get_result(self, resp_url: str) -> dict:
+    def get_result(self, image_path: str, resp_url: str) -> dict:
         """
         Retrieve the analysis results returned by the send_for_analysis() method.
         If the analysis is successful, the result is parsed and check for validity.
 
         Args:
+            image_path: The path of the image sent for analysis
             resp_url: The operation url where the analysis results can be retrieved from the Form Recognizer endpoint
         Returns:
             If the image is a valid nutrition label, a dictionary of analyzed results is returned containing:
@@ -104,17 +103,17 @@ class FormRecognizer:
                 resp_json = resp.json()
 
                 if resp.status_code != 200:
-                    print(f"Error! Server could not analyze result for:\n{resp_url}\n"
+                    print(f"Error! Server could not analyze result for: {image_path}\n"
                           f"Server response:\n{json.dumps(resp_json)}")
                     return None
 
                 if resp_json["status"] == "failed":
-                    print(f"Error! Server failed to analyze result for:\n{resp_url}\n"
+                    print(f"Error! Server failed to analyze result for: {image_path}\n"
                           f"Server response:\n{json.dumps(resp_json)}")
                     return None
 
                 elif resp_json["status"] == "succeeded":
-                    print(f"Analysis has been successfully completed for:\n{resp_url}")
+                    print(f"Analysis has been successfully completed for: {image_path}")
                     return self._parse_result(resp_json)  # Process result
 
                 # Sleep and retry
@@ -122,11 +121,11 @@ class FormRecognizer:
                 wait_time += wait_interval
 
             except Exception as e:
-                print(f"Cannot send request to analyze result for:\n{resp_url}\n"
+                print(f"Cannot send request to analyze result for: {image_path}\n"
                       f"Error: {str(e)}")
                 return None
 
-        print(f"Timeout! Cannot retrieve analysis results within {max_wait_time}s for:\n{resp_url}")
+        print(f"Timeout! Cannot retrieve analysis results within {max_wait_time}s for: {image_path}")
         return None
 
     def _parse_result(self, resp_json: dict) -> dict:
