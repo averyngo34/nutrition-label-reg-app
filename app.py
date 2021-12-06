@@ -43,14 +43,18 @@ def accept_image():
 @app.route('/summary', methods=['POST', 'GET'])
 def summary_update():
     if request.method == "POST":
-        data = json.loads(request.form.to_dict()["request"])
-        body = aggregate_data(data)
+        body = None
+        if "request" in request.form.to_dict():
+            data = json.loads(request.form.to_dict()["request"])
+            body = aggregate_data(data)
         summary_update.summary = body
         print(f"Received: {summary_update.summary}")
         return jsonify({'msg': 'success'})
 
     if request.method == "GET":
         if summary_update.summary is None:
+            return "No summary"
+        if len(summary_update.summary) == 0:
             return "No summary"
         return summary_update.summary
 
