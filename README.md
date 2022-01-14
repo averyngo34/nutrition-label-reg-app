@@ -2,11 +2,11 @@
 
 This Azure web application allows users to keep track of their daily nutrition intake by posting nutrition label photos of their foods.
 
-This application was developed using 4 Azure services :
-    1. Web App to interact with users
-    2. Form Recognizer with custom trained model to scan the labels
-    3. Cosmos DB to record the nutrition intake
-    4. Functions to calculate and notify users of their daily nutrition intake
+This application was developed using 4 Azure services : 
+1. Web App to interact with users
+2. Form Recognizer with custom trained model to scan the labels
+3. Cosmos DB to record the nutrition intake
+4. Functions to calculate and notify users of their daily nutrition intake
 
 ![alt text](https://github.gatech.edu/dngo34/nutrition-label-cloud-app/blob/main/service_interaction.png)
 
