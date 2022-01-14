@@ -1,5 +1,24 @@
 # Nutrition Label Recognizer
 
+This Azure web application allows users to keep track of their daily nutrition intake by posting nutrition label photos of their foods.
+
+This application was developed using 4 Azure services :
+    1. Web App to interact with users
+    2. Form Recognizer with custom trained model to scan the labels
+    3. Cosmos DB to record the nutrition intake
+    4. Functions to calculate and notify users of their daily nutrition intake
+
+![alt text](http://github.gatech.edu/dngo34/nutrition-label-cloud-app/service_interaction.png)
+
+When a nutrition label photo is sent to the web app, the web app reads and extracts nutrition facts through a Form Recognizer custom trained model. It then records this data to Azure Cosmos DB endpoint and update the user daily intake. The daily nutriton intake is then relayed back to users through the web app.
+
+
+## Assumptions
+
+1. Each submitted photo (JPEG, PNG, BMP, TIFF only)contains only one clear and readable nutrition label.
+2. Photo must be in JPEF, PNG and TIFF format and less than 50 MB
+
+
 ## Prerequisites
 
 Setup the environment by installing the requirements.
@@ -68,9 +87,9 @@ func azure functionapp publish sicc-ajm-project4-func
 5. Verify in browser at https://sicc-ajm-project4.azurewebsites.net/summary
 
 
-## Known Issues
+## Notes
 
-* !!! If you add new dependencies, make sure to update the requirements.txt, because this is required to deploy it to Azure. 
+* If you add new dependencies, make sure to update the requirements.txt, because this is required to deploy it to Azure. 
 * Do not allow `pkg_resources==0.0.0` in requirements.txt.
 * cURL POST to Azure must be `https://` and not `http://`.
 
