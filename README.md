@@ -8,7 +8,7 @@ This application was developed using 4 Azure services :
     3. Cosmos DB to record the nutrition intake
     4. Functions to calculate and notify users of their daily nutrition intake
 
-![alt text](http://github.gatech.edu/dngo34/nutrition-label-cloud-app/service_interaction.png)
+![alt text](https://github.gatech.edu/dngo34/nutrition-label-cloud-app/blob/main/service_interaction.png)
 
 When a nutrition label photo is sent to the web app, the web app reads and extracts nutrition facts through a Form Recognizer custom trained model. It then records this data to Azure Cosmos DB endpoint and update the user daily intake. The daily nutriton intake is then relayed back to users through the web app.
 
