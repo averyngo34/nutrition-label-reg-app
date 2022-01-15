@@ -15,7 +15,7 @@ When a nutrition label photo is sent to the web app, the web app reads and extra
 
 ## Assumptions
 
-1. Each submitted photo (JPEG, PNG, BMP, TIFF only)contains only one clear and readable nutrition label.
+1. Each submitted photo (JPEG, PNG, BMP, TIFF only) contains one clear and readable nutrition label.
 2. Photo must be in JPEF, PNG and TIFF format and less than 50 MB
 
 
